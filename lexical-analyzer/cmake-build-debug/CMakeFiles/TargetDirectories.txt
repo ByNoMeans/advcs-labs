@@ -1,0 +1,3 @@
+C:/Users/barre/Desktop/Github/advcs-lasa/lexical-analyzer/cmake-build-debug/CMakeFiles/lexical_analyzer.dir
+C:/Users/barre/Desktop/Github/advcs-lasa/lexical-analyzer/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/barre/Desktop/Github/advcs-lasa/lexical-analyzer/cmake-build-debug/CMakeFiles/rebuild_cache.dir
