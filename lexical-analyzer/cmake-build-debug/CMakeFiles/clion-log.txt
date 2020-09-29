@@ -1,4 +1,4 @@
-C:\Users\barre\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\202.6397.106\bin\cmake\win\bin\cmake.exe -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=C:/MinGW-w64/bin/mingw32-make.exe -DCMAKE_C_COMPILER=C:/MinGW-w64/bin/gcc.exe -DCMAKE_CXX_COMPILER=C:/MinGW-w64/bin/g++.exe -G "CodeBlocks - MinGW Makefiles" C:\Users\barre\Desktop\Github\advcs-lasa\lexical-analyzer
+C:\Users\barre\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\202.6397.106\bin\cmake\win\bin\cmake.exe -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=C:/MinGW-w64/bin/mingw32-make.exe -DCMAKE_C_COMPILER=C:/MinGW-w64/bin/gcc.exe -DCMAKE_CXX_COMPILER=C:/MinGW-w64/bin/g++.exe -G "CodeBlocks - MinGW Makefiles" C:\Users\barre\Desktop\Github\advcs-labs\lexical-analyzer
 -- The C compiler identification is GNU 9.2.0
 -- The CXX compiler identification is GNU 9.2.0
 -- Check for working C compiler: C:/MinGW-w64/bin/gcc.exe
@@ -15,4 +15,4 @@ C:\Users\barre\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\202.6397.106\bin\
 -- Detecting CXX compile features - done
 -- Configuring done
 -- Generating done
--- Build files have been written to: C:/Users/barre/Desktop/Github/advcs-lasa/lexical-analyzer/cmake-build-debug
+-- Build files have been written to: C:/Users/barre/Desktop/Github/advcs-labs/lexical-analyzer/cmake-build-debug

@@ -6,15 +6,17 @@
 
 #IncludeRegexTransform: 
 
-C:/Users/barre/Desktop/Github/advcs-lasa/lexical-analyzer/main.cpp
+C:/Users/barre/Desktop/Github/advcs-labs/file-io/main.cpp
 iostream
 -
 string
 -
+fstream
+-
 sstream
 -
-set
+cstdlib
 -
-algorithm
+vector
 -
 
