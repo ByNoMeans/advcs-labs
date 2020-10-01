@@ -15,8 +15,15 @@ string skipCellsReturnNext(const string& in, const int& stop) {
     return out;
 }
 
-bool isCapitalized(const string& in) {
-    return all_of(in.begin(), in.end(), [](char c){ return std::isupper(c) || c == ' ';});
+auto sortVP = [](
+        const pair<string, double> &a,
+        const pair<string, double> &b
+) { return a.second > b.second; };
+
+void printUSPlace(const vector<pair<string, double>>& in, const string& developed="") {
+    for (int i = 0; i < in.size(); i++)
+        if (in.at(i).first == "United States of America")
+            printf("The US is rank #%d of all %sregions in life expectancy.\n", i+1, developed.c_str());
 }
 
 int main() {
@@ -43,10 +50,12 @@ int main() {
         if (isRegion) {
             currentIsRegion = true;
             isDevelopedRegion = find(developedCountryNames.begin(), developedCountryNames.end(), countryName) !=
-                                developedCountryNames.end();
+                                developedCountryNames.end()
+                                || countryName == "United States of America"
+                                || countryName == "Australia/New Zealand";
         }
         if (!currentIsRegion && countryName.find("Europe") == string::npos) {
-            if (isDevelopedRegion || countryName == "United States of America" || countryName == "Australia/New Zealand")
+            if (isDevelopedRegion)
                 developedCountryData.emplace_back(countryName, countryAge);
             allData.emplace_back(countryName, countryAge);
         } else
@@ -54,23 +63,11 @@ int main() {
     }
 
     in.close();
-    auto sortVP = [](
-            const pair<string, double> &a,
-            const pair<string, double> &b
-    ) { return a.second > b.second; };
 
     sort(allData.begin(), allData.end(), sortVP);
     sort(developedCountryData.begin(), developedCountryData.end(), sortVP);
 
-    for (int i = 0; i < allData.size(); i++)
-        cout << allData.at(i).first << endl;
-//        if (allData.at(i).first == "United States of America")
-//            printf("The US is rank #%d of all regions in life expectancy.\n", i+1);
-
-cout << ";ksjdahasdfasdfasdfasdfasfdbfasdf;kjnb";
-    for (int i = 0; i < developedCountryData.size(); i++)
-        cout << developedCountryData.at(i).first << endl;
-//        if (developedCountryData.at(i).first == "United States of America")
-//            printf("The US is rank #%d of all developed regions in life expectancy.\n", i+1);
+    printUSPlace(allData);
+    printUSPlace(developedCountryData, "developed ");
 
 }
