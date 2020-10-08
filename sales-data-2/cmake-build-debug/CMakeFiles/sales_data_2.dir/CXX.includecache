@@ -6,19 +6,7 @@
 
 #IncludeRegexTransform: 
 
-C:/Users/barre/Desktop/Github/advcs-labs/world-data-io/main.cpp
+C:/Users/barre/Desktop/Github/advcs-labs/sales-data-2/main.cpp
 iostream
--
-string
--
-vector
--
-fstream
--
-sstream
--
-cstdio
--
-cctype
 -
 
