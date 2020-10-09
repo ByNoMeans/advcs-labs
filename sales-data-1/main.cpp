@@ -36,8 +36,6 @@ int main() {
             salesArr[c].units = atof(cNum);
             infile.getline(cNum, 256, ',');
             salesArr[c].unitCost = atof(cNum);
-            infile.getline(cNum, 256, '\n');
-            salesArr[c].Total = atof(cNum);
             i++;
             c++;
         }

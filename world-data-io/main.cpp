@@ -28,7 +28,7 @@ void printUSPlace(const vector<pair<string, double>>& in, const string& develope
 
 int main() {
 
-    fstream in{"../WPP2015_MORT_F07_1_LIFE_EXPECTANCY_0_BOTH_SEXES.csv"};
+    fstream in{"WPP2015_MORT_F07_1_LIFE_EXPECTANCY_0_BOTH_SEXES.csv"};
 
     if (!in.is_open() || in.bad())
         exit(EXIT_FAILURE);

@@ -6,17 +6,11 @@
 
 #IncludeRegexTransform: 
 
-C:/Users/barre/Desktop/Github/advcs-labs/sales-data-2/main.cpp
+C:/Users/barre/Desktop/Github/advcs-labs/sales-data-1/main.cpp
 cstdlib
 -
 iostream
 -
 fstream
--
-sstream
--
-vector
--
-algorithm
 -
 

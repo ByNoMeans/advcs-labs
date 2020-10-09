@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "C:/Users/barre/Desktop/Github/advcs-lasa/sales-data-1/main.cpp" "C:/Users/barre/Desktop/Github/advcs-lasa/sales-data-1/cmake-build-debug/CMakeFiles/structs_and_pointers.dir/main.cpp.obj"
+  "C:/Users/barre/Desktop/Github/advcs-labs/sales-data-1/main.cpp" "C:/Users/barre/Desktop/Github/advcs-labs/sales-data-1/cmake-build-debug/CMakeFiles/structs_and_pointers.dir/main.cpp.obj"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
