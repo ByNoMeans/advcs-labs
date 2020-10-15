@@ -6,7 +6,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_CHECK_CXX
   "C:/Users/barre/Desktop/Github/advcs-labs/sales-data-2/main.cpp" "C:/Users/barre/Desktop/Github/advcs-labs/sales-data-2/cmake-build-debug/CMakeFiles/sales_data_2.dir/main.cpp.obj"
   )
-set(CMAKE_CXX_COMPILER_ID "GNU")
+set(CMAKE_CXX_COMPILER_ID "Clang")
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH

@@ -53,10 +53,10 @@ cmake_force:
 SHELL = cmd.exe
 
 # The CMake executable.
-CMAKE_COMMAND = C:\Users\barre\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\202.6397.106\bin\cmake\win\bin\cmake.exe
+CMAKE_COMMAND = C:\Users\barre\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\202.7660.37\bin\cmake\win\bin\cmake.exe
 
 # The command to remove a file.
-RM = C:\Users\barre\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\202.6397.106\bin\cmake\win\bin\cmake.exe -E rm -f
+RM = C:\Users\barre\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\202.7660.37\bin\cmake\win\bin\cmake.exe -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
@@ -79,15 +79,15 @@ include CMakeFiles/sales_data_2.dir/flags.make
 CMakeFiles/sales_data_2.dir/main.cpp.obj: CMakeFiles/sales_data_2.dir/flags.make
 CMakeFiles/sales_data_2.dir/main.cpp.obj: ../main.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\barre\Desktop\Github\advcs-labs\sales-data-2\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/sales_data_2.dir/main.cpp.obj"
-	C:\MinGW-w64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\sales_data_2.dir\main.cpp.obj -c C:\Users\barre\Desktop\Github\advcs-labs\sales-data-2\main.cpp
+	C:\PROGRA~1\LLVM\bin\CLANG_~1.EXE  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\sales_data_2.dir\main.cpp.obj -c C:\Users\barre\Desktop\Github\advcs-labs\sales-data-2\main.cpp
 
 CMakeFiles/sales_data_2.dir/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/sales_data_2.dir/main.cpp.i"
-	C:\MinGW-w64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\barre\Desktop\Github\advcs-labs\sales-data-2\main.cpp > CMakeFiles\sales_data_2.dir\main.cpp.i
+	$(CMAKE_COMMAND) -E cmake_unimplemented_variable CMAKE_CXX_CREATE_PREPROCESSED_SOURCE
 
 CMakeFiles/sales_data_2.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/sales_data_2.dir/main.cpp.s"
-	C:\MinGW-w64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\barre\Desktop\Github\advcs-labs\sales-data-2\main.cpp -o CMakeFiles\sales_data_2.dir\main.cpp.s
+	$(CMAKE_COMMAND) -E cmake_unimplemented_variable CMAKE_CXX_CREATE_ASSEMBLY_SOURCE
 
 # Object files for target sales_data_2
 sales_data_2_OBJECTS = \

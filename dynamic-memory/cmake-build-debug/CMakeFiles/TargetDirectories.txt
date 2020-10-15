@@ -1,0 +1,3 @@
+C:/Users/barre/Desktop/Github/advcs-labs/dynamic-memory/cmake-build-debug/CMakeFiles/dynamic_memory.dir
+C:/Users/barre/Desktop/Github/advcs-labs/dynamic-memory/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/barre/Desktop/Github/advcs-labs/dynamic-memory/cmake-build-debug/CMakeFiles/rebuild_cache.dir
