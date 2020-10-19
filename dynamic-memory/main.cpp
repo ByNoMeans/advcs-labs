@@ -64,8 +64,7 @@ int main() {
             if (entries_p[i]->total() < entries_p[j]->total())
                 swap(entries_p[i], entries_p[j]);
     cout << "Record: OrderDate, Region, Rep, Item, 0, 0, 0\n";
-    for(ind=0; ind != 30; ++ind)
-        entries_p[ind]->print();
+    for_each(entries_p, entries_p + 30, [](const auto& e) { e->print(); } );
     delete[] entries_p;
     return 0;
 }

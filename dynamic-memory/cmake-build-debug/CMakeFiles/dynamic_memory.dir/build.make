@@ -79,15 +79,15 @@ include CMakeFiles/dynamic_memory.dir/flags.make
 CMakeFiles/dynamic_memory.dir/main.cpp.obj: CMakeFiles/dynamic_memory.dir/flags.make
 CMakeFiles/dynamic_memory.dir/main.cpp.obj: ../main.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\barre\Desktop\Github\advcs-labs\dynamic-memory\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/dynamic_memory.dir/main.cpp.obj"
-	C:\PROGRA~1\LLVM\bin\CLANG_~1.EXE  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\dynamic_memory.dir\main.cpp.obj -c C:\Users\barre\Desktop\Github\advcs-labs\dynamic-memory\main.cpp
+	C:\MinGW-w64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\dynamic_memory.dir\main.cpp.obj -c C:\Users\barre\Desktop\Github\advcs-labs\dynamic-memory\main.cpp
 
 CMakeFiles/dynamic_memory.dir/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/dynamic_memory.dir/main.cpp.i"
-	$(CMAKE_COMMAND) -E cmake_unimplemented_variable CMAKE_CXX_CREATE_PREPROCESSED_SOURCE
+	C:\MinGW-w64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\barre\Desktop\Github\advcs-labs\dynamic-memory\main.cpp > CMakeFiles\dynamic_memory.dir\main.cpp.i
 
 CMakeFiles/dynamic_memory.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/dynamic_memory.dir/main.cpp.s"
-	$(CMAKE_COMMAND) -E cmake_unimplemented_variable CMAKE_CXX_CREATE_ASSEMBLY_SOURCE
+	C:\MinGW-w64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\barre\Desktop\Github\advcs-labs\dynamic-memory\main.cpp -o CMakeFiles\dynamic_memory.dir\main.cpp.s
 
 # Object files for target dynamic_memory
 dynamic_memory_OBJECTS = \

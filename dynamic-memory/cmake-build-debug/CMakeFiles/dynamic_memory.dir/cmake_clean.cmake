@@ -2,8 +2,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/dynamic_memory.dir/main.cpp.obj"
   "dynamic_memory.exe"
   "dynamic_memory.exe.manifest"
-  "dynamic_memory.lib"
   "dynamic_memory.pdb"
+  "libdynamic_memory.dll.a"
 )
 
 # Per-language clean rules from dependency scanning.
