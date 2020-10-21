@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/barre/Desktop/Github/advcs-labs/inheritance-friends/main.cpp
+cstdlib
+-
+iostream
+-
+fstream
+-
+

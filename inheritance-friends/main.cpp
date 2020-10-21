@@ -6,19 +6,16 @@ using namespace std;
 
 class SalesRep {
 public:
-    char* rep[];        // A character array for ‘rep’ last name.
-    char* region[];        // A character array for the rep’s ‘region’
+    char rep[30];        // A character array for ‘rep’ last name.
+    char region[30];        // A character array for the rep’s ‘region’
 };
 
 class ItemCatalog {
-    ______ _____
-    __________;
+    friend class SALESREC;
 public:
-    char ________;    // character array for ‘item’ name.
-    _______
-            ____
-    ________;    // a real number for ‘unitCost’.
-
+    char item[20];    // character array for ‘item’ name.
+private:
+    float unitCost;    // a real number for ‘unitCost’.
 };
 
 class SALESREC : public SalesRep, public ItemCatalog {
@@ -26,17 +23,16 @@ public:
     char date[10];
     int units;
 
-    void setUnitCost(_____ _________) {
-        __________
+    void setUnitCost(float newUnitCost) {
+        unitCost = newUnitCost;
     }
 
-    static float getUnitCost() {
-        ______ _______
+    float getUnitCost() {
+        return unitCost;
     }
 
-    static float Total() {
-        return ______
-        ______ ________;
+    float Total() {
+        return static_cast<float>(units) * unitCost;
     }
 
     void displayRec() {
@@ -45,19 +41,18 @@ public:
     }
 };
 
-void simpleSortTotal(SALESREC *s[], int c);
+void simpleSortTotal(SALESREC* s[], int c);
 
 int main() {
     ifstream infile;
-    int array[20];
     char cNum[10];
-    SALESREC *salesArr[40];
+    SALESREC* salesArr[40];
     int salesArrayCount;
-    SALESREC *s[40];
+    SALESREC* s[30];
 
     infile.open("SalesDataP3.csv");
     if (infile.is_open()) {
-        int c{};
+        int c = 0;
         float inputUnitCost;
         while (infile.good()) {
             salesArr[c] = new SALESREC();
@@ -69,13 +64,14 @@ int main() {
             salesArr[c]->units = atoi(cNum);
             infile.getline(cNum, 256, '\n');
             inputUnitCost = atof(cNum);
-            _________________________;  //store in salesArr[c]
+            salesArr[c]->setUnitCost(inputUnitCost); //store in salesArr[c]
             c++;
         }
         salesArrayCount = c - 1;
         infile.close();
     } else {
-        cout << "Error opening file";
+        printf("%s", "Error opening file");
+        exit(EXIT_FAILURE);
     }
 
     for (int i{}; i < salesArrayCount; i++)
@@ -87,26 +83,19 @@ int main() {
 
     simpleSortTotal(s, salesArrayCount);
 
-    cout << " - - - - - - - - - - - -\n";
+    printf("%s\n", " - - - - - - - - - - - -");
     printf("%s\n", " Sorted Sales Record Array");
 
-    for (int i = 0; i < salesArrayCount; i++)
+    for (int i{}; i < salesArrayCount; i++)
         s[i]->displayRec();
 
-    //clean up (remove from memory) allocated sales records
     for (int i{}; i < salesArrayCount; i++)
-        ________ salesArr[i];
-
+        delete salesArr[i];
 }
 
-
-void simpleSortTotal(SALESREC *s[], int c) {
-    SALESREC *temp;
+void simpleSortTotal(SALESREC* s[], int c) {
     for (int i{}; i < c; i++)
         for (int j{}; j < c; j++)
-            if (_______________) {
-                ___________;
-                ___________;
-                ___________;
-            }
+            if (s[i]->Total() > s[j]->Total())
+              swap(s[i], s[j]);
 }
