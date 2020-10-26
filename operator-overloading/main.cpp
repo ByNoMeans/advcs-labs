@@ -19,6 +19,7 @@ private:
 };
 
 class SALESREC : public SalesRep, public ItemCatalog {
+    friend ostream& operator<<(ostream& out, const SALESREC& in);
 public:
     char date[10];
     int units;
@@ -27,19 +28,31 @@ public:
         unitCost = newUnitCost;
     }
 
-    float getUnitCost() {
+    float getUnitCost() const {
         return unitCost;
     }
 
-    float Total() {
+    float Total() const {
         return static_cast<float>(units) * unitCost;
     }
 
-    void displayRec() {
-        cout << "Record: " << date << ", " << region << ", " << rep << ", " << item << ", " << units << ", " << unitCost
-             << ", " << Total() << endl;
+    void operator+(const SALESREC& in) {
+        units += in.units;
     }
+
+    bool operator==(const SALESREC& in) {
+        return rep == in.rep &&
+                date == in.date &&
+                item == in.item;
+    }
+
 };
+
+ostream& operator<<(ostream& out, const SALESREC& in) {
+    return out << "Record: " << in.date << ", " << in.region << ", "
+               << in.rep << ", " << in.item << ", " << in.units << ", "
+               << in.getUnitCost() << ", " << in.Total() << endl;
+}
 
 void simpleSortTotal(SALESREC* s[], int c);
 int main() {
@@ -49,7 +62,7 @@ int main() {
     int salesArrayCount;
     SALESREC* s[40];
 
-    infile.open("SalesDataP3.csv");
+    infile.open("SalesDataP5.csv");
     if (infile.is_open()) {
         int c = 0;
         float inputUnitCost;
@@ -63,7 +76,7 @@ int main() {
             salesArr[c]->units = atoi(cNum);
             infile.getline(cNum, 256, '\n');
             inputUnitCost = atof(cNum);
-            salesArr[c]->setUnitCost(inputUnitCost); //store in salesArr[c]
+            salesArr[c]->setUnitCost(inputUnitCost);
             c++;
         }
         salesArrayCount = c - 1;
@@ -78,7 +91,7 @@ int main() {
 
     cout << "Unsorted Sales Record Array\n";
     for (int i{}; i < salesArrayCount; i++)
-        salesArr[i]->displayRec();
+        cout << *salesArr[i];
 
     simpleSortTotal(s, salesArrayCount);
 
@@ -86,7 +99,7 @@ int main() {
     printf("%s\n", " Sorted Sales Record Array");
 
     for (int i{}; i < salesArrayCount; i++)
-        s[i]->displayRec();
+        cout << *s[i];
 
     for (int i{}; i < salesArrayCount; i++)
         delete salesArr[i];
