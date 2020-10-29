@@ -3,4 +3,4 @@ project(operator_overloading)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(operator_overloading main.cpp)
+add_executable(operator_overloading main.cpp main.cpp)

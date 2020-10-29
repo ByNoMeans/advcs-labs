@@ -1,113 +1,104 @@
-#include <cstdlib>
+#include <set>
 #include <iostream>
 #include <fstream>
+#include <cstdlib>
+#include <algorithm>
 
 using namespace std;
 
 class SalesRep {
 public:
-    char rep[30];        // A character array for ‘rep’ last name.
-    char region[30];        // A character array for the rep’s ‘region’
+    char rep[50];
+    char region[50];
 };
 
 class ItemCatalog {
     friend class SALESREC;
 public:
-    char item[20];    // character array for ‘item’ name.
+    char item[50];
 private:
-    float unitCost;    // a real number for ‘unitCost’.
+    float unitCost;
 };
 
-class SALESREC : public SalesRep, public ItemCatalog {
-    friend ostream& operator<<(ostream& out, const SALESREC& in);
+class SALESREC: public SalesRep, public ItemCatalog {
+    friend ostream& operator << (ostream&, const SALESREC&);
 public:
     char date[10];
     int units;
-
-    void setUnitCost(float newUnitCost) {
-        unitCost = newUnitCost;
+    void setUnitCost(float in) {
+        unitCost = in;
     }
-
     float getUnitCost() const {
         return unitCost;
     }
-
     float Total() const {
-        return static_cast<float>(units) * unitCost;
+        return  static_cast<float>(units) * unitCost;
     }
-
-    void operator+(const SALESREC& in) {
+    bool operator ==(const SALESREC& in) {
+        return in.item == item && in.date == date && in.rep == rep;
+    }
+    void operator +(const SALESREC& in) {
         units += in.units;
     }
-
-    bool operator==(const SALESREC& in) {
-        return rep == in.rep &&
-                date == in.date &&
-                item == in.item;
-    }
-
 };
 
-ostream& operator<<(ostream& out, const SALESREC& in) {
+ostream &operator <<(ostream &out, const SALESREC& in) {
     return out << "Record: " << in.date << ", " << in.region << ", "
-               << in.rep << ", " << in.item << ", " << in.units << ", "
-               << in.getUnitCost() << ", " << in.Total() << endl;
+             << in.rep << ", " << in.item << ", " << in.units << ", "
+             << in.getUnitCost() << ", " << in.Total() << '\n';
 }
 
-void simpleSortTotal(SALESREC* s[], int c);
 int main() {
-    ifstream infile;
+    ifstream in;
     char cNum[10];
     SALESREC* salesArr[40];
-    int salesArrayCount;
-    SALESREC* s[40];
+    int salesArrayCount = 0;
 
-    infile.open("SalesDataP5.csv");
-    if (infile.is_open()) {
-        int c = 0;
+    in.open ("SalesDataP5.csv");
+    if (in.is_open()) {
+        int c{};
         float inputUnitCost;
-        while (infile.good()) {
+        while (in.good()) {
             salesArr[c] = new SALESREC();
-            infile.getline(salesArr[c]->date, 256, ',');
-            infile.getline(salesArr[c]->region, 256, ',');
-            infile.getline(salesArr[c]->rep, 256, ',');
-            infile.getline(salesArr[c]->item, 256, ',');
-            infile.getline(cNum, 256, ',');
+            in.getline(salesArr[c]->date, 256, ',');
+            in.getline(salesArr[c]->region, 256, ',');
+            in.getline(salesArr[c]->rep, 256, ',');
+            in.getline(salesArr[c]->item, 256, ',');
+            in.getline(cNum, 256, ',');
             salesArr[c]->units = atoi(cNum);
-            infile.getline(cNum, 256, '\n');
+            in.getline(cNum, 256, '\n');
             inputUnitCost = atof(cNum);
             salesArr[c]->setUnitCost(inputUnitCost);
             c++;
         }
-        salesArrayCount = c - 1;
-        infile.close();
-    } else {
-        printf("%s", "Error opening file");
-        exit(EXIT_FAILURE);
+        salesArrayCount = c-1;
+        in.close();
+    } else
+        cout << "Error opening file";
+
+    auto comp = [](SALESREC l, SALESREC r) {
+        return l.Total() < r.Total();
+    };
+
+    set<SALESREC, decltype(comp)> uniqueRecs(comp);
+
+    cout << " Unsorted Sales Record Array\n" ;
+    for (int i{}; i < salesArrayCount; i++) cout << *salesArr[i];
+
+    for (int i{}; i < salesArrayCount; ++i) {
+        for (int j{}; j < salesArrayCount; ++j)
+            if (salesArr[i] == salesArr[j] && i != j)
+                *salesArr[i] + *salesArr[j];
+        uniqueRecs.insert(*salesArr[i]);
     }
 
-    for (int i{}; i < salesArrayCount; i++)
-        s[i] = salesArr[i];
+    SALESREC t[uniqueRecs.size()];
+    copy(uniqueRecs.begin(), uniqueRecs.end(), t);
+    SALESREC* s[uniqueRecs.size()];
 
-    cout << "Unsorted Sales Record Array\n";
-    for (int i{}; i < salesArrayCount; i++)
-        cout << *salesArr[i];
-
-    simpleSortTotal(s, salesArrayCount);
-
-    printf("%s\n", " - - - - - - - - - - - -");
-    printf("%s\n", " Sorted Sales Record Array");
-
-    for (int i{}; i < salesArrayCount; i++)
-        cout << *s[i];
-
-    for (int i{}; i < salesArrayCount; i++)
-        delete salesArr[i];
-}
-
-void simpleSortTotal(SALESREC* s[], int c) {
-    for (int i{}; i < c; i++)
-        for (int j{}; j < c; j++)
-            if (s[i]->Total() < s[j]->Total())
-              swap(s[i], s[j]);
+    for (int i{}; i < uniqueRecs.size(); i++) s[i] = &t[i];
+    cout << " - - - - - - - - - - - -\n" ;
+    cout << " Sorted Sales Record Array\n";
+    for (int i{}; i < uniqueRecs.size(); i++) cout << *s[i];
+    for (int i{}; i < salesArrayCount; i++) delete salesArr[i];
 }
