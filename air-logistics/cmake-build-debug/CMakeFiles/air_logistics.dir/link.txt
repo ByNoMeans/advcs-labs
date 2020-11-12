@@ -1,0 +1,3 @@
+C:\Users\barre\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\202.7660.37\bin\cmake\win\bin\cmake.exe -E rm -f CMakeFiles\air_logistics.dir/objects.a
+C:\MinGW-w64\bin\ar.exe cr CMakeFiles\air_logistics.dir/objects.a @CMakeFiles\air_logistics.dir\objects1.rsp
+C:\MinGW-w64\bin\g++.exe -g   -Wl,--whole-archive CMakeFiles\air_logistics.dir/objects.a -Wl,--no-whole-archive  -o air_logistics.exe -Wl,--out-implib,libair_logistics.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\air_logistics.dir\linklibs.rsp
