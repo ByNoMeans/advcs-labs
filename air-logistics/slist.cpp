@@ -144,7 +144,8 @@ std::string slist::toString() const {
     std::string out;
     for (Node* c=head_; c!=nullptr; c=c->next)
         out += std::to_string(i) + ": " + c->data->code_ + ":  ("
-                + std::to_string(c->data->longitude_)
-                + ", " + std::to_string(c->data->latitude_) + ") \n";
+                + std::to_string(c->data->longitude_) + ", "
+                + std::to_string(c->data->latitude_) + ") Distance from AUS: "
+                + std::to_string(c->data->distance_au_) + " miles\n";
     return out;
 }
