@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/barre/Desktop/Github/advcs-labs/lexical-analyzer/main.cpp
+iostream
+-
+string
+-
+sstream
+-
+set
+-
+algorithm
+-
+

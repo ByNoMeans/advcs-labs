@@ -7,29 +7,25 @@ slist::slist() {
 }
 
 slist::~slist() {
-    for (Node* c = head_, *n; c != nullptr; c = n) {
-        n = c->next;
-        delete c->data;
-        delete c;
-    }
+    clear();
 }
 
-void slist::add(Airport& add) {
+void slist::add(Airport* add) noexcept {
     Node* n = new Node();
-    n->data = &add;
+    n->data = add;
     n->next = nullptr;
     if (head_ == nullptr) {
         head_ = n;
         tail_ = n;
     } else {
         tail_->next = n;
-        tail_ = tail_->next;
+        tail_ = n;
     }
     length++;
 }
 
-void slist::clear() {
-    for (Node* c=head_, *n; c != nullptr; c = n) {
+void slist::clear() noexcept {
+    for (Node* c=head_, *n; c != nullptr; c=n) {
         n = c->next;
         delete c->data;
         delete c;
@@ -37,7 +33,7 @@ void slist::clear() {
     length = 0;
 }
 
-bool slist::equals(const slist& in) const {
+bool slist::equals(const slist& in) const noexcept {
     if (in.size() != length) return false;
     Node* ic = in.head_;
     for (Node* c=head_; c != nullptr; c=c->next, ic=ic->next) {
@@ -49,103 +45,96 @@ bool slist::equals(const slist& in) const {
     return ic == nullptr;
 }
 
-Node* slist::get(const int& index) const {
+Node* slist::get(const int& index) const noexcept {
     assert(index < length && index > -1);
     Node* c = head_;
-    for (int i=0; i <= index; i++, c=c->next);
+    for (int i=0; i < index; i++, c=c->next);
     return c;
 }
 
-void slist::insert(Airport& airport, const int& index) {
+void slist::insert(Airport* airport, const int& index) noexcept {
     assert(index > -1 && index < length);
-    Node* c = new Node();
     if (index == 0) {
-        c->data = &airport;
+        Node *c = new Node();
+        c->data = airport;
         c->next = head_;
         head_ = c;
+    } else if (index == length - 1) {
+        add(airport);
     } else {
-        c->data = &airport;
-        Node* n = get(index);
+        Node *c = new Node();
+        c->data = airport;
+        Node* n = get(index - 1);
         c->next = n->next;
         n->next = c;
     }
     length++;
 }
 
-void slist::exchg(const int& index1, const int& index2)  {
+void slist::exchg(const int& index1, const int& index2) const noexcept {
     assert(index1 > -1 && index2 >-1 && index1 < length && index2 < length);
     if (index1 == index2) return;
     std::swap(get(index1)->data, get(index2)->data);
 }
 
-void slist::swap(const int& index1, const int& index2) {
-    assert(index1 > -1 && index2 >-1 && index1 < length && index2 < length);
+void slist::swap(const int& index1, const int& index2) noexcept {
+    assert(index1 > -1 && index2 >-1 && index1 < length && index2 < length && index2 > index1);
     if (index1 == index2) return;
-    Node* n1; Node* n1_p;
-    Node* n2; Node* n2_p;
-    if (index1 == 0) {
-        n1_p = head_;
-        n1 = n1_p->next;
+    if (index1 != 0) {
+        Node* n1 = get(index1 - 1), *n2 = get(index2 - 1);
+        std::swap(n1->next->next, n2->next->next);
+        std::swap(n1->next, n2->next);
     } else {
-        n1_p = get(index1 -1);
-        n1 = n1_p->next;
+        Node* n1 = get(index2 - 1);
+        std::swap(head_->next, n1->next->next);
+        std::swap(head_, n1->next);
     }
-    if (index2 == 0) {
-        n2_p = head_;
-        n2 = n2_p->next;
-    } else {
-        n2_p = get(index2 -1);
-        n2 = n2_p->next;
-    }
-    std::swap(n1->data, n2->data);
-    std::swap(n1->next, n2->next);
-    n1_p->next = n2;
-    n2_p->next = n1;
 }
 
-bool slist::isEmpty() const {
-    return length == 0;
-}
-
-void slist::remove(const int& index) {
+void slist::remove(const int& index) noexcept {
     assert(index < length && index > -1);
     if (index == 0) {
-        head_->next = head_->next->next;
-        delete head_->next;
+        Node *n = head_;
+        head_ = head_->next;
+        delete n;
+    } else if (index == length - 1) {
+        Node* p = get(index - 1);
+        Node* l = p->next;
+        tail_ = p;
+        p->next = nullptr;
+        delete l;
     } else {
-        Node* n = get(index - 1);
-        n->next = n->next->next;
-        delete n->next;
+        Node* p = get(index - 1);
+        Node* l = p->next;
+        p->next = p->next->next;
+        delete l;
     }
     length--;
 }
 
-void slist::set(const int& index, Airport& airport) {
+void slist::set(const int& index, Airport* airport) const noexcept {
     assert(index < length && index > -1);
-    get(index)->data = &airport;
+    get(index)->data = airport;
 }
 
-int slist::size() const {
+int slist::size() const noexcept {
     return length;
 }
 
-slist slist::subList(const int& start, const int& size) const {
+slist* slist::subList(const int& start, const int& size) const noexcept {
     assert(start < length && start + size < length);
-    slist out;
+    auto* out = new slist();
     int i = 0;
     for (Node* c=head_; i<start+size; i++, c=c->next)
         if (i >= start)
-            out.add(*(c->data));
+            out->add(c->data);
     return out;
 }
 
-std::string slist::toString() const {
+void slist::toString() const noexcept {
     int i = 0;
-    std::string out;
-    for (Node* c=head_; c!=nullptr; c=c->next)
-        out += std::to_string(i) + ": " + c->data->code_ + ":  ("
-                + std::to_string(c->data->longitude_) + ", "
-                + std::to_string(c->data->latitude_) + ") Distance from AUS: "
-                + std::to_string(c->data->distance_au_) + " miles\n";
-    return out;
+    for (Node* c=head_; c!=nullptr; c=c->next) {
+        std::cout << std::to_string(i++) + ": ";
+        c->data->print();
+    }
 }

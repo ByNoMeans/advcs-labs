@@ -1,3 +1,0 @@
-C:\Users\barre\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\202.7660.37\bin\cmake\win\bin\cmake.exe -E rm -f CMakeFiles\lasalle.dir/objects.a
-C:\MinGW-w64\bin\ar.exe cr CMakeFiles\lasalle.dir/objects.a @CMakeFiles\lasalle.dir\objects1.rsp
-C:\MinGW-w64\bin\g++.exe -g   -Wl,--whole-archive CMakeFiles\lasalle.dir/objects.a -Wl,--no-whole-archive  -o lasalle.exe -Wl,--out-implib,liblasalle.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\lasalle.dir\linklibs.rsp
