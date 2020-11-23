@@ -25,11 +25,8 @@ void slist::add(Airport* add) noexcept {
 }
 
 void slist::clear() noexcept {
-    for (Node* c=head_, *n; c != nullptr; c=n) {
+    for (Node* c=head_, *n; c != nullptr; delete c->data, delete c, c=n)
         n = c->next;
-        delete c->data;
-        delete c;
-    }
     length = 0;
 }
 
@@ -133,8 +130,6 @@ slist* slist::subList(const int& start, const int& size) const noexcept {
 
 void slist::toString() const noexcept {
     int i = 0;
-    for (Node* c=head_; c!=nullptr; c=c->next) {
-        std::cout << std::to_string(i++) + ": ";
-        c->data->print();
-    }
+    for (Node* c=head_; c!=nullptr; c->data->print(), c=c->next, i++)
+        std::cout << std::to_string(i) + ": ";
 }

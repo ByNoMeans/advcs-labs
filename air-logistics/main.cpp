@@ -25,6 +25,8 @@ int main() {
 
     infile.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
+    Airport* furthest;
+
     while (infile.good()) {
         char code[5], temp[10];
         double latitude, longitude;
@@ -34,15 +36,15 @@ int main() {
         infile.getline(temp, 10, '\n');
         longitude = std::stod(temp);
         auto *airport = new Airport(code, latitude, longitude);
+        furthest = airport->distance_au_ > furthest->distance_au_ ? airport : furthest;
         if (airport->distance_au_ <= 100.0)
             airports.add(airport);
     }
     infile.close();
 
     simpleSortTotal(airports);
-    const auto *last = airports.get(airports.size() - 1);
-    std::cout << "The furthest Airport from AUS is " << last->data->code_ << "; " << last->data->distance_au_
-              << " kilometers away.\n\n"
+    std::cout << "The furthest Airport from AUS is " << furthest->code_ << "; " << furthest->distance_au_
+              << " miles away.\n\n"
               << "All airports within 100 miles of AUS:\n";
     airports.toString();
 }
