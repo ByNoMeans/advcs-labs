@@ -28,6 +28,8 @@ void slist::clear() noexcept {
     for (Node* c=head_, *n; c != nullptr; delete c->data, delete c, c=n)
         n = c->next;
     length = 0;
+    head_ = nullptr;
+    tail_ = nullptr;
 }
 
 bool slist::equals(const slist& in) const noexcept {
