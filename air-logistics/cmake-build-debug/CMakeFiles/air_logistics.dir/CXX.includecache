@@ -6,7 +6,15 @@
 
 #IncludeRegexTransform: 
 
-C:/Users/barre/Desktop/Github/advcs-labs/air-logistics/slist.cpp
+C:/Users/barre/Desktop/Github/advcs-labs/air-logistics/main.cpp
+iostream
+-
+limits
+-
+fstream
+-
+cmath
+-
 slist.h
 C:/Users/barre/Desktop/Github/advcs-labs/air-logistics/slist.h
 
