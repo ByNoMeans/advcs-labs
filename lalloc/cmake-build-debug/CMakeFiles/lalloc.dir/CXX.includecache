@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/barre/Desktop/Github/advcs-labs/lalloc/LASAalloc.cpp
+iostream
+-
+cstdlib
+-
+LASAalloc.h
+C:/Users/barre/Desktop/Github/advcs-labs/lalloc/LASAalloc.h
+
+C:/Users/barre/Desktop/Github/advcs-labs/lalloc/LASAalloc.h
+
