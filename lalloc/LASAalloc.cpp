@@ -1,124 +1,150 @@
-#include<iostream>
 #include <cstdlib>
+#include <iostream>
+
 #include "LASAalloc.h"
 
-#define INITIAL_MALLOC_SIZE 100000
-#define MAX_MALLOC_SIZE 100000
-
-block* free_head_b;
-
-unsigned char buffer[MAX_MALLOC_SIZE];
-
-LASAalloc::LASAalloc() {
-    brk(INITIAL_MALLOC_SIZE);
-
-    free_head_b = (block*)buffer_base;
-    free_list_b = free_head_b;
-
-    free_head_b->size_ = (int)(buffer_size_t - sizeof(block));
-    free_head_b->prev_ = nullptr;
-    free_head_b->next_ = nullptr;
-    free_head_b->allocated_ = (void*)((long long int)buffer_base + (long long int)sizeof(block));
-
-    std::cout << "Constructing:\n"
-              << "\tbuffer space allocated: " << buffer_base << " - " << brk(0) << '\n'
-              << "\tfree head location: " << free_list_b << " - " << brk(0) << '\n'
-              << "\tblock head size: " << sizeof(block) << '\n';
-
-    display_node(free_list_b);
+void* LASAalloc::brk(const size_t& size) noexcept {
+    if (size) {
+        if (!buffer_base)
+            buffer_base = (block*)malloc(size);
+        else
+            std::cout << "buffer already locked\n";
+    }
+    return nullptr;
 }
 
-void* LASAalloc::lalloc(size_t to_alloc) {
-    block* head_b = free_head_b;
-    while (head_b) {
-        if (to_alloc > head_b->size_) {
-            head_b = head_b->next_;
-            if (!head_b)
-                return nullptr;
-            continue;
-        }
-        if (to_alloc + 32 >= head_b->size_) {
-            head_b->size_ = to_alloc;
-            if (!head_b->next_ && !head_b->prev_)
-                free_head_b = nullptr;
-            else if (!head_b->next_ && head_b->prev_) {
-                head_b->prev_->next_ = nullptr;
-                head_b->prev_ = nullptr;
-            } else if (head_b->next_ && !head_b->prev_) {
-                head_b->next_->prev_ = nullptr;
-                free_head_b = head_b->next_;
-                head_b->next_ = nullptr;
-            } else {
-                head_b->next_->prev_ = head_b->prev_;
-                head_b->prev_->next_ = head_b->next_;
-                head_b->prev_ = nullptr;
-                head_b->next_ = nullptr;
+LASAalloc::LASAalloc() noexcept {
+    brk(INITIAL_MALLOC_SIZE);
+
+    auto* first_b = buffer_base;
+    free_list_head = start = first_b;
+
+    first_b->next_ = first_b->prev_ = nullptr;
+    first_b->size_ = INITIAL_MALLOC_SIZE;
+    first_b->data_ = (block*)((long long int)buffer_base + BLOCK_SIZE);
+    first_b->is_free_ = true;
+
+    // Show initial statistics
+    std::cout << "Allocated buffer: " << buffer_base << " - " << brk(0) << '\n'
+              << "Free list: " << free_list_head << " - " << brk(0) << '\n'
+              << "Block size: " << BLOCK_SIZE << '\n'
+              << "Size of integer: " << sizeof(int) << '\n';
+
+    display_node(free_list_head);
+}
+
+LASAalloc::~LASAalloc() noexcept {
+    free(buffer_base);
+    free_list = free_list_head = start = nullptr;
+}
+
+void LASAalloc::display_node(const block* in_b) noexcept {
+    std::cout << "Prev: " << in_b->prev_ << "\tNext: " << in_b->next_
+              << "\tFree: " << in_b->is_free_ << "\tSize: " << in_b->size_
+              << "\tThis: " << in_b->data_ << '\n'
+              << '\n';
+}
+
+void LASAalloc::display() noexcept {
+    block* curr_b = start;
+    if (!curr_b){
+        std::cout<<"List is empty\n";
+        return;
+    }
+    std::cout<<"List is :\n";
+    while (curr_b){
+        display_node(curr_b);
+        curr_b = curr_b->next_;
+    }
+    std::cout << "\n";
+}
+
+void* LASAalloc::lalloc(const size_t& size) noexcept {
+    if (size + BLOCK_SIZE <= free_list_head->size_){
+        split(free_list_head, size);
+        free_list = (block*)((long long int)free_list + BLOCK_SIZE);
+        return free_list;
+    } else if (size + BLOCK_SIZE > free_list_head->size_){
+        if (!free_list_head->next_)
+            return nullptr;
+        else {
+            block* curr_b = free_list_head;
+            while (curr_b){
+                if (curr_b->size_ > size + BLOCK_SIZE && curr_b->is_free_){
+                    split(curr_b, size);
+                    free_list = (block*)((long long int)free_list + BLOCK_SIZE);
+                    return free_list;
+                } else
+                    curr_b = curr_b->next_;
             }
-            return head_b;
-        } else {
-            block* new_head_b = head_b + 32 + to_alloc;
-            new_head_b->size_ = head_b->size_ - 32 - to_alloc;
-            if (!head_b->next_ && !head_b->prev_) {
-                new_head_b->next_ = nullptr;
-                new_head_b->prev_ = nullptr;
-                free_head_b = new_head_b;
-            } else if (head_b->next_ && !head_b->prev_) {
-                new_head_b->next_ = head_b->next_;
-                new_head_b->prev_ = nullptr;
-                free_head_b = new_head_b;
-            } else if (!head_b->next_ && head_b->prev_ ) {
-                new_head_b->next_ = nullptr;
-                new_head_b->prev_ = head_b->prev_;
-            } else {
-                new_head_b->next_ = head_b->next_;
-                new_head_b->prev_ = head_b->prev_;
-            }
-            return new_head_b;
         }
     }
     return nullptr;
 }
 
-LASAalloc::~LASAalloc() {
+void* LASAalloc::lfree(const void* in_b) noexcept {
 
-}
+    auto* to_free_b = (block*)((long long int)in_b - BLOCK_SIZE);
+    block* to_free_next = to_free_b->next_;
+    block* to_free_prev = to_free_b->prev_;
+    size_t to_free_t = to_free_b->size_;
 
-void* LASAalloc::lfree(void* in_b) {
+    to_free_b->next_ = to_free_next;
+    to_free_b->prev_ = to_free_prev;
+    to_free_b->size_ = to_free_t;
+    to_free_b->is_free_ = true;
+    to_free_b->data_ = (block*)(BLOCK_SIZE + (long long int)(block*)in_b);
 
-}
-
-void LASAalloc::display_node(block* in_b) {
-    std::cout << "block: " << in_b->allocated_
-              << "\n\tsize: " << in_b->size_
-              << "\n\tnext: " << in_b->next_
-              << "\n\tprev: " << in_b->prev_
-              << "\n\tbuffer: " << in_b->allocated_
-              << "\n";
-}
-
-void LASAalloc::printFreeList() {
-    block* begin_b = free_head_b;
-    if (!begin_b) {
-        std::cout << "List is empty\n";
-        return;
-    }
-    std::cout << "List is:\n";
-    while(begin_b) {
-        display_node(begin_b);
-        begin_b = begin_b->next_;
-    }
-    std::cout << '\n';
-}
-
-void* LASAalloc::brk(size_t size) {
-    if (size != 0) {
-        if (!buffer_base) {
-            buffer_base = malloc(size);
-            buffer_size_t = size;
+    block* curr_b = start;
+    block* curr_b_next = curr_b->next_;
+    while (curr_b_next){
+        if (curr_b->is_free_ && curr_b_next->is_free_) {
+            curr_b->size_ = BLOCK_SIZE + curr_b->size_ + curr_b_next->size_;
+            curr_b->next_ = curr_b_next->next_;
+            curr_b_next = curr_b->next_;
         } else {
-            std::cout << "buffer already locked\n";
-            return nullptr;
+            curr_b = curr_b_next;
+            curr_b_next = curr_b_next->next_;
         }
     }
-    return buffer_size_t + (char*) buffer_base;
+
+    curr_b = start;
+    while (curr_b){
+        if (curr_b->is_free_){
+            free_list_head = curr_b;
+            break;
+        }
+        curr_b = curr_b->next_;
+    }
+
+    return nullptr;
+}
+
+void* LASAalloc::split(block* to_split_b, const size_t& size) noexcept {
+    auto* to_free_b = (block*)((long long int)to_split_b + size + BLOCK_SIZE);
+    block* to_return_b = to_split_b;
+    size_t to_split_t = to_split_b->size_;
+
+    if (to_split_t != INITIAL_MALLOC_SIZE) to_split_t += BLOCK_SIZE;
+
+    block* to_split_next = to_split_b->next_;
+    block* to_split_prev = to_split_b->prev_;
+
+    to_return_b->next_ = to_free_b;
+    to_return_b->prev_ = to_split_prev;
+    to_return_b->size_ = size;
+    to_return_b->is_free_ = false;
+    to_return_b->data_ = (block*)((long long int)to_return_b + BLOCK_SIZE);
+    free_list = to_return_b;
+
+    to_free_b->next_ = to_split_next;
+    to_free_b->prev_ = to_return_b;
+
+    free_list_head = to_free_b;
+
+    to_free_b->size_ = to_split_t - size - 2 * BLOCK_SIZE;
+    to_free_b->is_free_ = true;
+    to_free_b->data_ = (block*)((long long int)to_free_b + BLOCK_SIZE);
+
+    return to_return_b;
 }

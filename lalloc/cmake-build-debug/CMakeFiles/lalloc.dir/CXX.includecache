@@ -6,13 +6,15 @@
 
 #IncludeRegexTransform: 
 
-C:/Users/barre/Desktop/Github/advcs-labs/lalloc/LASAalloc.cpp
-iostream
+C:/Users/barre/Desktop/Github/advcs-labs/lalloc/LASAalloc.h
+
+C:/Users/barre/Desktop/Github/advcs-labs/lalloc/main.cpp
+cstdio
 -
 cstdlib
 -
+iostream
+-
 LASAalloc.h
-C:/Users/barre/Desktop/Github/advcs-labs/lalloc/LASAalloc.h
-
 C:/Users/barre/Desktop/Github/advcs-labs/lalloc/LASAalloc.h
 

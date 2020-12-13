@@ -1,22 +1,28 @@
 #pragma once
+
 struct block {
     block* prev_;
     block* next_;
+    block* data_;
     size_t size_;
-    void* allocated_;
+    bool is_free_;
 };
 
-class LASAalloc {
-    void display_node(block* in_b);
-    void* buffer_base = nullptr;
-    size_t buffer_size_t = 0;
-    block* free_list_b = nullptr;
+constexpr int INITIAL_MALLOC_SIZE {100000};
+constexpr long long int BLOCK_SIZE {sizeof(block)};
 
+class LASAalloc {
+    block* buffer_base = nullptr;
+    void* split(block*, const size_t&) noexcept;
+    static void display_node(const block*) noexcept;
 public:
-    LASAalloc();
-    ~LASAalloc();
-    void printFreeList();
-    void* lalloc(size_t to_alloc);
-    void* lfree(void* in_b);
-    void* brk(size_t);
+    LASAalloc() noexcept;
+    ~LASAalloc() noexcept;
+    block* free_list = nullptr;
+    block* free_list_head = nullptr;
+    block* start = nullptr;
+    void* brk(const size_t&) noexcept;
+    void* lalloc(const size_t&) noexcept;
+    void* lfree(const void*) noexcept;
+    void display() noexcept;
 };
