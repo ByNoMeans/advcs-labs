@@ -14,7 +14,7 @@ void slist::add(Airport* add) noexcept {
     Node* n = new Node();
     n->data = add;
     n->next = nullptr;
-    if (head_ == nullptr) {
+    if (!head_) {
         head_ = n;
         tail_ = n;
     } else {
@@ -25,8 +25,7 @@ void slist::add(Airport* add) noexcept {
 }
 
 void slist::clear() noexcept {
-    for (Node* c=head_, *n; c != nullptr; delete c->data, delete c, c=n)
-        n = c->next;
+    for (Node* c=head_, *n; c; delete c->data, delete c, c=n) n = c->next;
     length = 0;
     head_ = nullptr;
     tail_ = nullptr;
@@ -35,7 +34,7 @@ void slist::clear() noexcept {
 bool slist::equals(const slist& in) const noexcept {
     if (in.size() != length) return false;
     Node* ic = in.head_;
-    for (Node* c=head_; c != nullptr; c=c->next, ic=ic->next) {
+    for (Node* c=head_; c; c=c->next, ic=ic->next) {
         Airport* c_d = c->data;
         Airport* in_d = ic->data;
         if (c_d->latitude_ !=in_d->latitude_ || c_d->longitude_!= in_d->longitude_ || strcmp(c_d->code_, in_d->code_) != 0)
@@ -53,7 +52,7 @@ Node* slist::get(const int& index) const noexcept {
 
 void slist::insert(Airport* airport, const int& index) noexcept {
     assert(index > -1 && index < length);
-    if (index == 0) {
+    if (!index) {
         Node *c = new Node();
         c->data = airport;
         c->next = head_;
@@ -79,7 +78,7 @@ void slist::exchg(const int& index1, const int& index2) const noexcept {
 void slist::swap(const int& index1, const int& index2) noexcept {
     assert(index1 > -1 && index2 >-1 && index1 < length && index2 < length && index2 > index1);
     if (index1 == index2) return;
-    if (index1 != 0) {
+    if (index1) {
         Node* n1 = get(index1 - 1), *n2 = get(index2 - 1);
         std::swap(n1->next->next, n2->next->next);
         std::swap(n1->next, n2->next);
@@ -92,7 +91,7 @@ void slist::swap(const int& index1, const int& index2) noexcept {
 
 void slist::remove(const int& index) noexcept {
     assert(index < length && index > -1);
-    if (index == 0) {
+    if (!index) {
         Node *n = head_;
         head_ = head_->next;
         delete n;
@@ -132,6 +131,6 @@ slist* slist::subList(const int& start, const int& size) const noexcept {
 
 void slist::toString() const noexcept {
     int i = 0;
-    for (Node* c=head_; c!=nullptr; c->data->print(), c=c->next, i++)
+    for (Node* c=head_; c; c->data->print(), c=c->next, i++)
         std::cout << std::to_string(i) + ": ";
 }
