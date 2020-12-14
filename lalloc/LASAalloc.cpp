@@ -45,7 +45,7 @@ void LASAalloc::display_node(const block* in_b) noexcept {
               << '\n';
 }
 
-void LASAalloc::display() noexcept {
+void LASAalloc::display() const noexcept {
     block* curr_b = start;
     if (!curr_b){
         std::cout<<"List is empty\n";

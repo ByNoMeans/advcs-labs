@@ -1,5 +1,7 @@
 #pragma once
 
+using namespace std;
+
 struct block {
     block* prev_;
     block* next_;
@@ -24,5 +26,5 @@ public:
     void* brk(const size_t&) noexcept;
     void* lalloc(const size_t&) noexcept;
     void* lfree(const void*) noexcept;
-    void display() noexcept;
+    void display() const noexcept;
 };
