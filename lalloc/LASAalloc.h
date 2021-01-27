@@ -20,8 +20,8 @@ class LASAalloc {
 public:
     LASAalloc() noexcept;
     ~LASAalloc() noexcept;
-    block* free_list = nullptr;
-    block* free_list_head = nullptr;
+    block *free_list, *free_list_head, *start;
+    free_list = free_list_head start = nullptr;
     block* start = nullptr;
     void* brk(const size_t&) noexcept;
     void* lalloc(const size_t&) noexcept;
